@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Voting Registration</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .box {
+            width: 380px;
+            margin: 60px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        input[readonly] {
+            background-color: #eee;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+    </style>
+
+    <script>
+        function calculateAge() {
+            const dob = document.getElementById("dob").value;
+            const ageField = document.getElementById("age");
+            if (!dob) {
+                ageField.value = "";
+                return;
+            }
+            const birthDate = new Date(dob);
+            const today = new Date();
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const m = today.getMonth() - birthDate.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            ageField.value = age;
+        }
+
+        function submitForm() {
+            const age = document.getElementById("age").value;
+            const aadhaar = document.getElementById("aadhaar").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            const voterId = document.getElementById("voterid").value.trim().toUpperCase();
+            if (!/^\d{12}$/.test(aadhaar)) {
+                alert("❌ Aadhaar must be exactly 12 digits.");
+                return false;
+            }
+            phone = phone.replace(/[\s\-()]/g, "");
+            if (phone.startsWith("+91")) {
+                phone = phone.substring(3);
+            } else if (phone.startsWith("91") && phone.length === 12) {
+                phone = phone.substring(2);
+            }
+            if (!/^\d{10}$/.test(phone)) {
+                alert("❌ Enter a valid 10-digit Indian mobile number.");
+                return false;
+            }
+            if (!/^[6-9]\d{9}$/.test(phone)) {
+                alert("❌ Indian mobile numbers must start with 6, 7, 8, or 9.");
+                return false;
+            }
+            if (!/^[A-Z]{3}[0-9]{7}$/.test(voterId)) {
+                alert("❌ Invalid Voter ID format.\nExample: ABC1234567");
+                return false;
+            }
+            if (age === "" || age < 18) {
+                alert("❌ You are not eligible to vote. Age must be 18 or above.");
+                return false;
+            }
+            alert("✅ Registration successful! You are eligible to vote.");
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+<div class="box">
+    <h2>Online Voting Registration</h2>
+    <form onsubmit="return submitForm()">
+
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" required>
+        </div>
+        <div class="form-group">
+            <label>Aadhaar Number</label>
+            <input type="text" id="aadhaar" maxlength="12" required>
+        </div>
+        <div class="form-group">
+            <label>Voter ID</label>
+            <input type="text" id="voterid" placeholder="ABC1234567" required>
+        </div>
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" id="phone" maxlength="10" placeholder="Enter Indian mobile number" required>
+        </div>
+        <div class="form-group">
+            <label>Gender</label>
+            <select required>
+                <option value="">Select</option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Date of Birth</label>
+            <input type="date" id="dob" onchange="calculateAge()" required>
+        </div>
+        <div class="form-group">
+            <label>Age</label>
+            <input type="number" id="age" readonly>
+        </div>
+        <div class="form-group">
+            <label>Address</label>
+            <textarea rows="3" required></textarea>
+        </div>
+        <button type="submit">Check Eligibility</button>
+    </form>
+</div>
+</body>
+</html>
