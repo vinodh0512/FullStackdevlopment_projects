@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ShoppingCart, Star, Eye, Tag, Smartphone, Headphones, Watch } from 'lucide-react';
+import { ShoppingCart, Star, Eye, Heart, Plus } from 'lucide-react';
 import './App.css';
 
 function App() {
@@ -13,17 +13,15 @@ function App() {
 
   const fetchProducts = async () => {
     try {
-      // Trying to fetch from local backend
       const response = await axios.get('http://localhost:5000/api/products');
       setProducts(response.data);
     } catch (error) {
       console.error("Backend not reachable, using mock data", error);
-      // Fallback mock data if backend isn't running
       setProducts([
-        { _id: '1', name: 'Ultra Wireless Headset', price: 199.99, description: 'Premium sound quality with noise cancellation.', category: 'Electronics', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80', rating: 4.5 },
-        { _id: '2', name: 'Mechanical RGB Keyboard', price: 129.99, description: 'Satisfying clicks and customizable lighting.', category: 'Accessories', image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=800&q=80', rating: 4.8 },
-        { _id: '3', name: 'Smart Fitness Watch', price: 249.99, description: 'Track your health and workouts in style.', category: 'Wearables', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80', rating: 4.2 },
-        { _id: '4', name: 'Pro Gaming Mouse', price: 79.99, description: 'Ergonomic design for long gaming sessions.', category: 'Accessories', image: 'https://images.unsplash.com/photo-1527814050087-37a3c71cc0ad?auto=format&fit=crop&w=800&q=80', rating: 4.6 }
+        { _id: '1', name: 'Ultra Wireless Headset', price: 199.99, description: 'Premium sound quality with noise cancellation.', category: 'Electronics', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80', rating: 4.8 },
+        { _id: '2', name: 'Mechanical RGB Keyboard', price: 129.99, description: 'Satisfying clicks and customizable lighting.', category: 'Accessories', image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=800&q=80', rating: 4.9 },
+        { _id: '3', name: 'Smart Fitness Watch', price: 249.99, description: 'Track your health and workouts in style.', category: 'Wearables', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80', rating: 4.5 },
+        { _id: '4', name: 'Pro Gaming Mouse', price: 79.99, description: 'Ergonomic design for long gaming sessions.', category: 'Accessories', image: 'https://images.unsplash.com/photo-1527814050087-37a3c71cc0ad?auto=format&fit=crop&w=800&q=80', rating: 4.7 }
       ]);
     } finally {
       setLoading(false);
@@ -35,10 +33,10 @@ function App() {
       <nav className="navbar">
         <div className="container nav-content">
           <div className="logo">Lumina<span>Store</span></div>
-          <div className="nav-icons">
+          <div className="nav-actions">
             <div className="cart-icon">
-              <ShoppingCart size={24} />
-              <span className="cart-count">3</span>
+              <ShoppingCart size={22} />
+              <span className="cart-count">2</span>
             </div>
           </div>
         </div>
@@ -46,44 +44,57 @@ function App() {
 
       <header className="hero">
         <div className="container">
-          <h1>Modern Tech <span>Essentials</span></h1>
-          <p>Curated collection of the finest gadgets and accessories for your digital lifestyle.</p>
+          <h1>Next-Gen Tech <br /><span>for the Modern World</span></h1>
+          <p>Experience the intersection of high-performance engineering and sophisticated design.</p>
         </div>
       </header>
 
       <main className="container">
         <div className="section-header">
-          <h2>Featured Products</h2>
+          <h2>Our Collection</h2>
           <div className="categories">
             <span className="active">All</span>
-            <span>Electronics</span>
-            <span>Accessories</span>
-            <span>Wearables</span>
+            <span>Audio</span>
+            <span>Input</span>
+            <span>Smart Devices</span>
           </div>
         </div>
 
         {loading ? (
-          <div className="loader">Loading products...</div>
+          <div className="loader-container">
+            <div className="loader"></div>
+            <p>Gathering the best for you...</p>
+          </div>
         ) : (
           <div className="product-grid">
             {products.map(product => (
               <div key={product._id} className="product-card">
-                <div className="product-image" style={{backgroundImage: `url(${product.image})`}}>
-                  <div className="overlay">
-                    <button className="icon-btn"><Eye size={20} /></button>
-                    <button className="icon-btn"><Tag size={20} /></button>
+                <div className="product-image-container">
+                  <div className="product-image" style={{backgroundImage: `url(${product.image})`}}></div>
+                  <div className="product-badges">
+                    <span className="badge">New Arrival</span>
+                  </div>
+                  <div className="overlay-actions">
+                    <button className="action-btn"><Heart size={18} /></button>
+                    <button className="action-btn"><Eye size={18} /></button>
                   </div>
                 </div>
                 <div className="product-info">
-                  <span className="category">{product.category}</span>
+                  <span className="category-tag">{product.category}</span>
                   <h3>{product.name}</h3>
-                  <div className="rating">
-                    <Star size={14} fill="#f59e0b" color="#f59e0b" />
-                    <span>{product.rating}</span>
+                  <div className="rating-container">
+                    <div className="rating-stars">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={14} fill={i < Math.floor(product.rating) ? "#f59e0b" : "transparent"} color="#f59e0b" />
+                      ))}
+                    </div>
+                    <span className="rating-value">{product.rating}</span>
                   </div>
-                  <div className="footer">
-                    <span className="price">${product.price}</span>
-                    <button className="add-btn">Add to Cart</button>
+                  <div className="product-footer">
+                    <span className="price-tag">${product.price}</span>
+                    <button className="buy-btn">
+                      <Plus size={18} /> Add
+                    </button>
                   </div>
                 </div>
               </div>
@@ -92,9 +103,15 @@ function App() {
         )}
       </main>
 
-      <footer className="store-footer">
+      <footer className="main-footer">
         <div className="container">
-          <p>&copy; 2026 LuminaStore Experiment. Built with MERN Stack.</p>
+          <div className="footer-content">
+            <div className="footer-logo">Lumina<span>Store</span></div>
+            <p>Elevating your daily tech experience since 2024.</p>
+          </div>
+          <div className="footer-bottom">
+            <p>&copy; 2026 LuminaStore. All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </div>
