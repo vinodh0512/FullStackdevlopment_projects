@@ -18,10 +18,10 @@ function App() {
     } catch (error) {
       console.error("Backend not reachable, using mock data", error);
       setProducts([
-        { _id: '1', name: 'Ultra Wireless Headset', price: 199.99, description: 'Premium sound quality with noise cancellation.', category: 'Electronics', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80', rating: 4.8 },
-        { _id: '2', name: 'Mechanical RGB Keyboard', price: 129.99, description: 'Satisfying clicks and customizable lighting.', category: 'Accessories', image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=800&q=80', rating: 4.9 },
-        { _id: '3', name: 'Smart Fitness Watch', price: 249.99, description: 'Track your health and workouts in style.', category: 'Wearables', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80', rating: 4.5 },
-        { _id: '4', name: 'Pro Gaming Mouse', price: 79.99, description: 'Ergonomic design for long gaming sessions.', category: 'Accessories', image: 'https://images.unsplash.com/photo-1527814050087-37a3c71cc0ad?auto=format&fit=crop&w=800&q=80', rating: 4.7 }
+        { _id: '1', name: 'Ultra Wireless Headset', price: 15999, description: 'Premium sound quality with noise cancellation.', category: 'Electronics', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80', rating: 4.8 },
+        { _id: '2', name: 'Mechanical RGB Keyboard', price: 8499, description: 'Satisfying clicks and customizable lighting.', category: 'Accessories', image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=800&q=80', rating: 4.9 },
+        { _id: '3', name: 'Smart Fitness Watch', price: 12999, description: 'Track your health and workouts in style.', category: 'Wearables', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80', rating: 4.5 },
+        { _id: '4', name: 'Pro Gaming Mouse', price: 4299, description: 'Ergonomic design for long gaming sessions.', category: 'Accessories', image: 'https://images.unsplash.com/photo-1527814050087-37a3c71cc0ad?auto=format&fit=crop&w=800&q=80', rating: 4.7 }
       ]);
     } finally {
       setLoading(false);
@@ -91,7 +91,7 @@ function App() {
                     <span className="rating-value">{product.rating}</span>
                   </div>
                   <div className="product-footer">
-                    <span className="price-tag">${product.price}</span>
+                    <span className="price-tag">₹{product.price.toLocaleString('en-IN')}</span>
                     <button className="buy-btn">
                       <Plus size={18} /> Add
                     </button>

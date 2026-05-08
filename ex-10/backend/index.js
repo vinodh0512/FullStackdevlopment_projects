@@ -53,9 +53,9 @@ app.post('/api/products', async (req, res) => {
 // Seed Initial Data
 app.get('/api/seed', async (req, res) => {
     const products = [
-        { name: 'Ultra Wireless Headset', price: 199.99, description: 'Premium sound quality with noise cancellation.', category: 'Electronics', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80', rating: 4.5 },
-        { name: 'Mechanical RGB Keyboard', price: 129.99, description: 'Satisfying clicks and customizable lighting.', category: 'Accessories', image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=800&q=80', rating: 4.8 },
-        { name: 'Smart Fitness Watch', price: 249.99, description: 'Track your health and workouts in style.', category: 'Wearables', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80', rating: 4.2 }
+        { name: 'Ultra Wireless Headset', price: 15999, description: 'Premium sound quality with noise cancellation.', category: 'Electronics', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80', rating: 4.5 },
+        { name: 'Mechanical RGB Keyboard', price: 8499, description: 'Satisfying clicks and customizable lighting.', category: 'Accessories', image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=800&q=80', rating: 4.8 },
+        { name: 'Smart Fitness Watch', price: 12999, description: 'Track your health and workouts in style.', category: 'Wearables', image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80', rating: 4.2 }
     ];
     await Product.deleteMany({});
     await Product.insertMany(products);
